@@ -256,7 +256,7 @@ A store app that meets all the expected functionality outlined at the beginning 
 
 This assignment spans over two class days.
 
-You will be required to submit this particular assignment just once before Friday at 10 AM. We suggest that you try not to save it all for Thursday night and at least try to do the following:
+You will be required to submit this particular assignment just once before Monday at 10 AM. We suggest that you try not to save it all for Sunday night and at least try to do the following:
 
 **On the first night of this homework, you should work on having:**
 - The app setup, the database connected, the index and show page and new/create page done
