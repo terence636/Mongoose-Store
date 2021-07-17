@@ -7,14 +7,21 @@
     <title>CMC-Product</title>
   </head>
   <body>
-    <h2><%= product.name%></h2><br />
-    <img src=<%= product.img%> width=200 />
-    <p>QTY: <%= product.qty%></p>
-    <button onClick="window.location.href='/products'">Back To Home</button><br>
-    <button onClick="window.location.href='/products/edit/<%=pos%>'">Edit</button><br>
+    <div class="showContainer">
+    <button onClick="window.location.href='/products'">Back To Home</button>
+    <!-- <a href="/products">Back To Home</a> -->
+    <h3><%= product.name%></h3>
+    <div class="productContainer">
+    <img src=<%= product.img%> width=200 height=200/>
+    <p><%= product.qty + " "%> remaining</p>
+    <p><%= product.description%></p>
+    <p>Price: $<%= product.price%></p>
+    </div>
+    <button onClick="window.location.href='/products/edit/<%=pos%>'">Edit This Product</button>
     <form action="/products/<%=pos%>?_method=DELETE" method="POST">
       <button>Delete</button>
     </form>
     <!-- <a href="/products">Back To Home</a> -->
+    </div>
   </body>
 </html>
