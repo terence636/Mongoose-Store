@@ -13,9 +13,19 @@
     <h3><%= product.name%></h3>
     <div class="productContainer">
     <img src=<%= product.img%> width=200 height=200/>
-    <p><%= product.qty + " "%> remaining</p>
+    <% if(product.qty !== 0) { %>
+        <p><%=product.qty%> remaining</p> 
+    <% } else { %> 
+        <p>Out Of Stock</p>%>
+    <% } %>
     <p><%= product.description%></p>
     <p>Price: $<%= product.price%></p>
+    <% if(product.qty !== 0) { %>
+        <form action="/products/buy/<%=pos%>?_method=PUT" method="POST">
+            <button>BUY</button>
+          </form>
+    <% } %>
+    
     </div>
     <button onClick="window.location.href='/products/edit/<%=pos%>'">Edit This Product</button>
     <form action="/products/<%=pos%>?_method=DELETE" method="POST">

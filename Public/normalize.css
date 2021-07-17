@@ -439,7 +439,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-between;
+      /* justify-content: space-between; */
   }
 
   .card {
@@ -475,4 +475,8 @@
     align-items: center;
     padding: 10px;
     width: 200px;
+  }
+
+  .createContainer {
+    text-align: center;
   }

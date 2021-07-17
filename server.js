@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 const Product = require('./models/product.js');
 const Sample = require('./models/sample.js');
 const mongoURI = "mongodb://localhost:27017/products";
-const db = mongoose.connection;
+
 
 // CONFIG - MONGODB
 mongoose.connect(mongoURI, {
@@ -26,6 +26,7 @@ mongoose.connect(mongoURI, {
 mongoose.connection.once("open", () => {
   console.log("connected to mongo");
 });
+const db = mongoose.connection;
 //
 
 const sample = require('./models/sample.js');
@@ -61,7 +62,7 @@ app.get('/seed', async (req, res) => {
     } catch (err) {
       res.send(err.message)
     }
-  })
+})
 
 // FOR TESTING
 app.get("/",(req,res)=>{
@@ -76,7 +77,19 @@ app.get("/products",(req,res)=>{
     Product.find({},(error,allProducts)=>{
         res.render("index.ejs",{allProducts})
     })
-   
+    
+})
+
+// CREATE NEW PRODUCT
+app.get("/products/new",(req,res)=>{
+    res.render("new.ejs",{})
+})
+
+app.post("/products", (req,res)=>{
+    console.log(req.body)
+    Product.create(req.body,(error,cretedProduct)=>{
+        res.redirect("/products");
+      })    
 })
 
 // FOR SHOW INDIVIDUAL ITEM
@@ -84,8 +97,24 @@ app.get("/products/:id",(req,res)=>{
     Product.findById(req.params.id,(error,product)=>{
         res.render("show.ejs",{product,pos:req.params.id})
     })
+    
+    
 })
 
+// BUY UPDATE
+app.put("/products/buy/:id", (req, res) => {
+    
+    let newQty = 0;
+    Product.findById(req.params.id,(error,product)=>{
+        newQty = product.qty + 1;
+        Product.findOneAndUpdate({_id:req.params.id},{qty:newQty},{new:true},(error,product)=>{
+            console.log(product)
+            res.redirect(`/products/${req.params.id}`);
+        })
+    })
+    
+    
+});
 
 
 // FOR LISTEN TO LOCAL HOST

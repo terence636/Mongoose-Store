@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>New Page</title>
+    <!-- <link rel="stylesheet" href="/css/app.css"> -->
+    <link rel="stylesheet" href="/normalize.css" >
+    <link rel="stylesheet" href="/skeleton.css" >    
+  </head>
+  <body>
+    <div class="createContainer">
+    <h1>New Product</h1>
+    <form action="/products" method="POST">
+    <label>Name:</label>
+    <input type="text" id="name" name="name" placeholder="Name"/><br />
+    <label>Description:</label>
+    <input type="text" id="description" name="description" placeholder="Description"/><br />
+    <label>Price:</label>
+    <input type="text" id="price" name="price" placeholder="Price"/><br />
+    <label>Qty:</label>
+    <input type="text" id="qty" name="qty" placeholder="qty"/><br />
+    <label>Img:</label>
+    <input type="text" id="img" name="img" placeholder="img"/><br />
+    <input type="submit" value="Create Product" />
+    </form>
+    <button onClick="window.location.href='/products'">Back To Home</button>
+    </div>
+  </body>
+</html>
