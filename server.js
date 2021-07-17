@@ -6,7 +6,7 @@ const PORT = process.env.PORT
 //Setup middleware
 //Middleware
 const methodOverride = require("method-override");
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"))
 app.use(methodOverride("_method"))
 
@@ -115,6 +115,24 @@ app.put("/products/buy/:id", (req, res) => {
     
     
 });
+
+// EDIT PRODUCT
+app.get("/products/edit/:id",(req,res)=>{
+    Product.findById(req.params.id,(error,product)=>{
+        res.render("edit.ejs",{product,pos:req.params.id})
+    })
+})
+
+app.put("/products/edit/:id", (req, res) => {
+    
+    console.log("body",req.body)
+    Product.findByIdAndUpdate(req.params.id,req.body,{new:true},(error,updateProduct)=>{
+            console.log("after",updateProduct)
+            res.redirect("/products");
+        })    
+});
+
+
 
 
 // FOR LISTEN TO LOCAL HOST
