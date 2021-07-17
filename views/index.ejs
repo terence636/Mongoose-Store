@@ -23,17 +23,20 @@
         /> </a>
         <div class="card-body">
           <h5 class="card-title">
-              <%= allProducts[i].name + " $" + allProducts[i].price%>
+              <%= allProducts[i].name + " - $" + allProducts[i].price%>
           </h5>
           <p class="card-text">
             <%= allProducts[i].description%>
           </p>
-          <a
+          <!-- <a
             href="/products/edit/<%= allProducts[i]._id%>"
             class="btn btn-primary"
           >
             EDIT
           </a>
+          <form action="/products/<%=allProducts[i]._id%>?_method=DELETE" method="POST">
+            <button>Delete</button>
+          </form> -->
         </div>
       </div>
       <% } %>

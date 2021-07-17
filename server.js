@@ -132,6 +132,12 @@ app.put("/products/edit/:id", (req, res) => {
         })    
 });
 
+// DELETE PRODUCT
+app.delete('/products/:index', (req, res) => {
+    Product.findByIdAndRemove(req.params.index,()=>{
+      res.redirect('/products');  
+    })
+});
 
 
 
