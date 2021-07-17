@@ -13,6 +13,7 @@ app.use(methodOverride("_method"))
 // MondoDB Setup
 const mongoose = require('mongoose');
 const Product = require('./models/product.js');
+const User = require('./models/user.js')
 const Sample = require('./models/sample.js');
 const mongoURI = "mongodb://localhost:27017/products";
 
@@ -31,8 +32,8 @@ const db = mongoose.connection;
 
 const sample = require('./models/sample.js');
 
-// Seed Data
-app.get('/seed', async (req, res) => {
+// Seed Data for Product
+app.get('/seed/products', async (req, res) => {
     const newProducts =
       [
         {
@@ -58,6 +59,28 @@ app.get('/seed', async (req, res) => {
   
     try {
       const seedItems = await Product.create(newProducts)
+      res.send(seedItems)
+    } catch (err) {
+      res.send(err.message)
+    }
+})
+
+// Seed Data for Product
+app.get('/seed/user', async (req, res) => {
+    const newUsers =
+      [
+        {
+          name: 'Lily',
+          shopping_cart: [],
+        }, 
+        {
+            name: 'Gracia',
+            shopping_cart: [],
+          }, 
+      ]
+  
+    try {
+      const seedItems = await User.create(newUsers)
       res.send(seedItems)
     } catch (err) {
       res.send(err.message)
@@ -95,6 +118,7 @@ app.post("/products", (req,res)=>{
 // FOR SHOW INDIVIDUAL ITEM
 app.get("/products/:id",(req,res)=>{
     Product.findById(req.params.id,(error,product)=>{
+        console.log("product",product)
         res.render("show.ejs",{product,pos:req.params.id})
     })
     
@@ -106,12 +130,28 @@ app.put("/products/buy/:id", (req, res) => {
     
     let newQty = 0;
     Product.findById(req.params.id,(error,product)=>{
-        newQty = product.qty + 1;
-        Product.findOneAndUpdate({_id:req.params.id},{qty:newQty},{new:true},(error,product)=>{
+        // Lets only one user 
+        User.findOne({name: {$eq:'Gracia'}},(error,user)=>{
+            // console.log("user",user)
+            // console.log("productname",product.name)
+            let updateShoppingCart = user.shopping_cart
+            updateShoppingCart.push(product)
+        
+            User.findOneAndUpdate({name:'Gracia'},{shopping_cart:updateShoppingCart},{new:true},(error,user)=>{
+                console.log("Update Cart",user)
+            })
+        })
+        
+
+        newQty = product.qty - 1;
+        // Product.findOneAndUpdate({_id:req.params.id},{qty:newQty},{new:true},(error,product)=>{
+         Product.findByIdAndUpdate(req.params.id,{qty:newQty},{new:true},(error,product)=>{
             console.log(product)
             res.redirect(`/products/${req.params.id}`);
         })
     })
+
+    
     
     
 });
@@ -139,6 +179,13 @@ app.delete('/products/:index', (req, res) => {
     })
 });
 
+// FOR USER SHOPPING CART
+app.get("/user/gracia",(req,res)=>{
+    User.findOne({name:'Gracia'},(error,user)=>{
+        res.render("user.ejs",{user})
+    })
+    
+})
 
 
 // FOR LISTEN TO LOCAL HOST
