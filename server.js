@@ -79,9 +79,16 @@ app.get("/products",(req,res)=>{
    
 })
 
+// FOR SHOW INDIVIDUAL ITEM
+app.get("/products/:id",(req,res)=>{
+    Product.findById(req.params.id,(error,product)=>{
+        res.render("show.ejs",{product,pos:req.params.id})
+    })
+})
 
 
 
+// FOR LISTEN TO LOCAL HOST
 app.listen(PORT,()=>{
     console.log("listening at port",PORT)
 })

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/skeleton.css" />
+    <title>CMC-Product</title>
+  </head>
+  <body>
+    <h2><%= product.name%></h2><br />
+    <img src=<%= product.img%> width=200 />
+    <p>QTY: <%= product.qty%></p>
+    <button onClick="window.location.href='/products'">Back To Home</button><br>
+    <button onClick="window.location.href='/products/edit/<%=pos%>'">Edit</button><br>
+    <form action="/products/<%=pos%>?_method=DELETE" method="POST">
+      <button>Delete</button>
+    </form>
+    <!-- <a href="/products">Back To Home</a> -->
+  </body>
+</html>
